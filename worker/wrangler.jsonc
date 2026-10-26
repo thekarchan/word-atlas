@@ -3,6 +3,9 @@
   "name": "word-atlas-assets-proxy",
   "main": "src/index.ts",
   "compatibility_date": "2026-10-01",
+  // Second entry point on Cloudflare-owned IPs; the custom domain is on the
+  // zone's anycast pair, which is throttled on some networks.
+  "workers_dev": true,
 
   // The only public entry point to the bucket. The bucket itself has no
   // custom domain and no r2.dev URL, so this is the sole way in.

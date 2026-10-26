@@ -27,7 +27,9 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_ASSET_BASE: https://assets.hellokar.org
+          # Repo variable overrides the default when the zone's anycast IPs are
+          # throttled on some networks.
+          VITE_ASSET_BASE: ${{ vars.ASSET_BASE || 'https://assets.hellokar.org' }}
 
       - name: Deploy
         uses: cloudflare/wrangler-action@v3
