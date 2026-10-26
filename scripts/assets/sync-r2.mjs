@@ -14,9 +14,19 @@
  * https://assets.hellokar.org/<key> — exactly what web/src/lib/assets.ts builds.
  */
 import { S3Client, HeadObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3";
+import { NodeHttpHandler } from "@smithy/node-http-handler";
+import { HttpsProxyAgent } from "https-proxy-agent";
 import fs from "node:fs";
 import path from "node:path";
 import { ASSETS, contentType, scan } from "./manifest.mjs";
+
+/** The SDK ignores the usual proxy variables, so honour them explicitly. */
+function requestHandler() {
+  const proxy = process.env.HTTPS_PROXY || process.env.https_proxy || process.env.HTTP_PROXY || process.env.http_proxy;
+  if (!proxy) return undefined;
+  const agent = new HttpsProxyAgent(proxy);
+  return new NodeHttpHandler({ httpsAgent: agent, httpAgent: agent });
+}
 
 const CACHE = "public, max-age=31536000, immutable";
 
@@ -108,6 +118,11 @@ async function main() {
       accessKeyId: process.env.R2_ACCESS_KEY_ID,
       secretAccessKey: process.env.R2_SECRET_ACCESS_KEY,
     },
+    // R2's S3 API wants the bucket in the path; the default virtual-host style
+    // resolves to <bucket>.<account>.r2.cloudflarestorage.com and fails the TLS
+    // handshake instead of returning a useful error.
+    forcePathStyle: true,
+    requestHandler: requestHandler(),
   });
 
   let done = 0;
