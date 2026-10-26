@@ -164,11 +164,11 @@ b2_env = [w for w in words if w["cefr"] == "B2" and w["topic"] == "environment"]
 代码和数据在 Cloudflare Pages，二进制媒体在 Cloudflare R2，两条线互不干扰。
 
 ```
-Cloudflare Pages · words.hellokar.org          Cloudflare R2 · assets.hellokar.org
-├── 网站界面（index.html / sw.js / _headers）   ├── 单词插画  illustrations/{img,thumb}
-├── React 应用（dist/assets/*.js|css|woff2）    ├── 音频文件  audio/{uk,us,ex,ex2}
-└── 学习功能（FSRS、星图、打字、分享）           └── 其他静态资源  brand/  sfx/
-    词库 JSON：web/public/atlas/
+Cloudflare Pages · words.hellokar.org          assets.hellokar.org
+├── 网站界面（index.html / sw.js / _headers）   └── Worker: word-atlas-assets-proxy
+├── React 应用（dist/assets/*.js|css|woff2）         ├── UsageLimiter（Durable Object 记账）
+└── 学习功能（FSRS、星图、打字、分享）               └── Cloudflare R2（私有，无公共入口）
+    词库 JSON：web/public/atlas/                         插画 / 音频 / 品牌图 / 音效
 ```
 
 | 目录 | 内容 | 去哪 |
@@ -178,7 +178,8 @@ Cloudflare Pages · words.hellokar.org          Cloudflare R2 · assets.hellokar
 | `data/` | 词库源数据（JSON / CSV） | 随仓库发布 |
 | `scripts/` | 生成、校验、上传 | — |
 
-这样拆是因为 Cloudflare Pages 单次部署上限 20,000 个文件，而媒体有 37,631 个。
+这样拆是因为 Cloudflare Pages 单次部署上限 20,000 个文件，而媒体有 37,553 个。R2 保持私有，
+所有读取经 Worker 转发并计入月度预算，见 [docs/assets-proxy.md](docs/assets-proxy.md)。
 地址全部由 [`web/src/lib/assets.ts`](web/src/lib/assets.ts) 统一拼装，换域名只改一个环境变量。
 完整流程见 [docs/deployment.md](docs/deployment.md)。
 

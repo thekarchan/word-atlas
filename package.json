@@ -7,7 +7,7 @@
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 0.0.0.0",
-    "test": "node --import tsx --test \"web/src/**/*.test.ts\"",
+    "test": "node --import tsx --test \"web/src/**/*.test.ts\" \"worker/src/**/*.test.ts\"",
     "check:atlas": "node scripts/check-atlas.mjs",
     "build:atlas": "python3 scripts/atlas/build_atlas.py",
     "render:cards": "node scripts/render-cards.mjs",
@@ -15,7 +15,11 @@
     "assets:manifest": "node scripts/assets/manifest.mjs",
     "assets:sync": "node scripts/assets/sync-r2.mjs",
     "assets:pull": "bash scripts/assets/pull-media.sh",
-    "format": "prettier --write web/src vite.config.ts scripts/*.mjs package.json tsconfig.json"
+    "format": "prettier --write web/src vite.config.ts scripts/*.mjs package.json tsconfig.json",
+    "worker:dev": "wrangler dev --config worker/wrangler.jsonc",
+    "worker:deploy": "wrangler deploy --config worker/wrangler.jsonc",
+    "worker:typecheck": "tsc -p worker/tsconfig.json",
+    "test:worker": "node --import tsx --test \"worker/src/**/*.test.ts\""
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",
@@ -26,6 +30,7 @@
   },
   "devDependencies": {
     "@aws-sdk/client-s3": "^3.1156.0",
+    "@cloudflare/workers-types": "^5.20261026.1",
     "@types/node": "^22.0.0",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",

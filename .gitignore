@@ -9,6 +9,7 @@ output/
 .DS_Store
 .playwright-cli/
 *.tsbuildinfo
+.wrangler/
 
 # Media tree — published to Cloudflare R2, not tracked.
 # `npm run assets:pull` restores it from history; `npm run assets:sync` publishes it.

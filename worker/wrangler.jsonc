@@ -1,0 +1,26 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "word-atlas-assets-proxy",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+
+  // The only public entry point to the bucket. The bucket itself has no
+  // custom domain and no r2.dev URL, so this is the sole way in.
+  "routes": [{ "pattern": "assets.hellokar.org", "custom_domain": true }],
+
+  "r2_buckets": [{ "binding": "ASSETS", "bucket_name": "word-atlas-assets" }],
+
+  "durable_objects": {
+    "bindings": [{ "name": "LIMITER", "class_name": "UsageLimiter" }]
+  },
+  // SQLite-backed: the Workers Free plan does not offer the KV backend.
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["UsageLimiter"] }],
+
+  "vars": {
+    "MONTHLY_REQUEST_LIMIT": "1000000",
+    "ALLOWED_ORIGIN": "https://words.hellokar.org",
+    "FAIL_CLOSED": "true"
+  },
+
+  "observability": { "enabled": true }
+}

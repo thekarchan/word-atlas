@@ -3,12 +3,18 @@
 站点分两个 Cloudflare 产品，边界只有一条：**代码和数据在 Pages，二进制媒体在 R2。**
 
 ```
-Cloudflare Pages · words.hellokar.org          Cloudflare R2 · assets.hellokar.org
-├── 网站界面（index.html / _headers / sw.js）   ├── 单词插画  illustrations/{img,thumb}
-├── React 应用（dist/assets/*.js|css|woff2）    ├── 音频文件  audio/{uk,us,ex,ex2}
-└── 学习功能（FSRS、星图、打字、分享）           └── 其他静态资源  brand/  sfx/
-    词库 JSON：/atlas/index.json + entries/
+Cloudflare Pages · words.hellokar.org          assets.hellokar.org
+├── 网站界面（index.html / _headers / sw.js）   │
+├── React 应用（dist/assets/*.js|css|woff2）    └── Worker: word-atlas-assets-proxy
+└── 学习功能（FSRS、星图、打字、分享）                 ├── UsageLimiter（Durable Object 记账）
+    词库 JSON：/atlas/index.json + entries/          └── Cloudflare R2（私有，无公共入口）
+                                                          ├── 单词插画  illustrations/{img,thumb}
+                                                          ├── 音频文件  audio/{uk,us,ex,ex2}
+                                                          └── 其他静态资源  brand/  sfx/
 ```
+
+R2 没有自定义域、也没有 `r2.dev` 地址，`assets.hellokar.org` 是唯一入口，
+经 Worker 转发并记账。详见 [assets-proxy.md](assets-proxy.md)。
 
 | | Pages | R2 |
 |---|---|---|
@@ -62,25 +68,30 @@ dev server 会直接把仓库里的 `assets/` 挂在 `/assets/` 下。
 
 顺序很重要：**先把媒体传上 R2，再切 Pages 域名**，否则用户会看到一堆 404 的插画。
 
-### 1. 建 bucket 并绑域名
+### 1. 建 bucket，不绑公共域名
 
 ```bash
 npx wrangler r2 bucket create word-atlas-assets
 ```
 
-Cloudflare 控制台 → R2 → `word-atlas-assets` → Settings → Custom Domains → 绑定
-`assets.hellokar.org`（需要该域名已托管在同一个 Cloudflare 账号）。
+**不要把 `assets.hellokar.org` 绑到 bucket 上**，也不要开 `r2.dev` 公共地址——
+那样会绕过 Worker 和额度闸门。主机名归 Worker 所有，见 [assets-proxy.md](assets-proxy.md)。
 
-不要用 `r2.dev` 的公共开发域名做生产：有速率限制，且不适合直接给终端用户访问。
+### 2. 跨域由 Worker 负责，不再配 R2 CORS
 
-### 2. 允许 Pages 跨域取媒体
+浏览器只和 Worker 说话，Worker 直接读 bucket 绑定，中间没有跨域问题。
+`Access-Control-Allow-Origin` 由 Worker 按 `ALLOWED_ORIGIN` 写入。
 
-`<img>` / `<audio>` 的普通引用不需要 CORS，但本项目有两处**必须**要：
+这一步仍然重要，因为本项目有两处**必须**要 CORS：
 
 - `web/src/lib/sound.ts` 用 `fetch()` 取 `sfx/*.mp3` 再喂给 Web Audio；
 - `web/src/ui/share.ts`、`shareSession.ts` 把插画画进 canvas 再 `toBlob()`，跨域无 CORS 会污染画布。
 
+只是现在由 Worker 统一返回，`scripts/assets/r2-cors.json` 只在回滚成「bucket 直连」
+方案时才需要。
+
 ```bash
+# 仅回滚到 bucket 直连时才需要
 npx wrangler r2 bucket cors set word-atlas-assets --file scripts/assets/r2-cors.json
 ```
 
