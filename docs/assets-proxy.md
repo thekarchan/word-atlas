@@ -104,3 +104,24 @@ bucket 内容不受影响，回滚只改主机名归属。
 R2 Class A（每次 `assets:sync` 上传产生）、DO 自身的存储与行读写、
 Workers CPU 时间。Cloudflare 也没有"花到 X 就停"的硬开关，
 只有账单通知——真正的兜底是免费计划的硬配额。
+
+## 入口 IP 被限速时的处理
+
+zone 分到的 anycast IP 在某些网络下会被限速甚至不可达：实测同一张 10 KB 缩略图，
+经 zone 的 IP 有 50%–60% 连接超时，经 Cloudflare 自家的 IP 段 4/4 通过、TLS 0.25 秒。
+一个首页要取 26 张图，于是表现成「很多图片看不到」。
+
+这不是 Worker 能修的——请求在到达 Worker 之前就断了。Worker 自报的
+`Server-Timing: quota;dur=47, r2;dur=151` 说明内部只花 200 毫秒左右。
+
+两条绕开的路子：
+
+1. **资源换入口**（当前采用）：构建时把 `VITE_ASSET_BASE` 指向
+   `https://word-atlas-assets-proxy.oneyearmd.workers.dev`。这是同一个 Worker，
+   计数与防护完全一致，只是走 Cloudflare 自己的 IP 段。
+2. **站点换解析**：把 `words` 改成 **DNS only** 的 CNAME 指向
+   `word-atlas-c4o.pages.dev`，让浏览器解析到同一组健康 IP。
+   Pages 的自定义域按 Host 头路由，证书仍然有效（已验证 `CN=words.hellokar.org`）。
+
+代价是这两个主机名不再经过 zone 的代理，zone 级 WAF / 缓存规则失效；
+Cloudflare 边缘自身的缓存与防护仍在。
