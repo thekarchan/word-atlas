@@ -1,0 +1,32 @@
+name: Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      # Validates the dataset in web/public/atlas. Media is not in the repo, so
+      # only the structure is checked here.
+      - run: npm run check:atlas
+      - run: npm run build
+      # Guard the Cloudflare Pages limits (20,000 files per deployment).
+      - name: Check deploy size
+        run: |
+          files=$(find dist -type f | wc -l | tr -d ' ')
+          size=$(du -sh dist | cut -f1)
+          echo "dist: $files files, $size"
+          if [ "$files" -gt 20000 ]; then
+            echo "::error::dist has $files files; Cloudflare Pages allows 20,000."
+            exit 1
+          fi

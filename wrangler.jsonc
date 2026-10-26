@@ -1,0 +1,9 @@
+{
+  // Cloudflare Pages project. `npm run build` writes ./dist, which is what gets
+  // deployed to words.hellokar.org. Binary media is NOT part of this deploy: it
+  // lives in the R2 bucket described in assets/README.md.
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "word-atlas",
+  "compatibility_date": "2026-10-01",
+  "pages_build_output_dir": "./dist"
+}

@@ -5,7 +5,12 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const pub = path.join(root, "public/atlas");
+// Dataset ships with the app (Cloudflare Pages); media lives in assets/ (Cloudflare R2).
+const pub = path.join(root, "web/public/atlas");
+const mediaRoot = path.join(root, "assets");
+const mediaReady =
+  fs.existsSync(path.join(mediaRoot, "illustrations/img")) &&
+  fs.readdirSync(path.join(mediaRoot, "illustrations/img")).length > 0;
 const index = JSON.parse(fs.readFileSync(path.join(pub, "index.json"), "utf8"));
 const errors = [];
 const warn = { headwordNotInExample: 0, missingIpa: 0, oneExample: 0 };
@@ -21,14 +26,15 @@ index.words.forEach((r, i) => {
   if (!(cefr >= 0 && cefr < index.cefr.length)) fail(`bad level: ${id}`);
   if (!(topic >= 0 && topic < index.topics.length)) fail(`bad topic: ${id}`);
   const need = [
-    [1, `img/${id}.webp`],
-    [1, `thumb/${id}.webp`],
+    [1, `illustrations/img/${id}.webp`],
+    [1, `illustrations/thumb/${id}.webp`],
     [2, `audio/uk/${id}.mp3`],
     [4, `audio/us/${id}.mp3`],
     [8, `audio/ex/${id}.mp3`],
     [16, `audio/ex2/${id}.mp3`],
   ];
-  for (const [bit, file] of need) if (media & bit && !fs.existsSync(path.join(pub, file))) fail(`missing ${file}`);
+  // Media is fetched on demand (npm run assets:pull); skip the check when absent.
+  if (mediaReady) for (const [bit, file] of need) if (media & bit && !fs.existsSync(path.join(mediaRoot, file))) fail(`missing ${file}`);
 });
 
 let entries = 0;
@@ -55,7 +61,7 @@ if (examples !== index.examples) fail(`examples ${examples} != ${index.examples}
 const bits = (b) => index.words.filter((r) => r[6] & b).length;
 console.log(
   JSON.stringify(
-    { words: index.count, examples, illustrated: bits(1), ukAudio: bits(2), usAudio: bits(4), sentenceAudio: bits(8), ieltsSentenceAudio: bits(16), warnings: warn, errors: errors.length },
+    { words: index.count, examples, illustrated: bits(1), ukAudio: bits(2), usAudio: bits(4), sentenceAudio: bits(8), ieltsSentenceAudio: bits(16), mediaChecked: mediaReady, warnings: warn, errors: errors.length },
     null,
     1,
   ),

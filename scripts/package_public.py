@@ -21,7 +21,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 TOP = {
     "README.md", "README.en.md", "LICENSE", "CONTENT_LICENSE.md", "CONTRIBUTING.md", "SECURITY.md",
-    ".gitignore", "package.json", "package-lock.json", "tsconfig.json", "vite.config.ts", "index.html",
+    ".gitignore", "package.json", "package-lock.json", "tsconfig.json", "vite.config.ts",
+    "wrangler.jsonc", "PUBLIC_MANIFEST.json",
 }
 SCRIPTS = {"check-atlas.mjs", "render-cards.mjs", "record-demo.mjs", "package_public.py"}
 ATLAS_SCRIPTS = {"common.py", "gen_text.py", "gen_images.py", "gen_brand.py", "gen_word_audio.py", "gen_sentence_audio.py", "gen_sfx.py", "gen_galaxy_audio.sh", "fix_blocked.py", "build_atlas.py", "build_sfx.py"}
@@ -43,34 +44,40 @@ def allowed(rel: Path) -> bool:
         return False
     if len(p) == 1:
         return name in TOP
-    if p[0] == "src":
-        return rel.suffix in {".ts", ".tsx", ".css", ".svg"}
+    if p[0] == "web":
+        # web/ is the Cloudflare Pages app: shell + React source + JSON dataset.
+        if len(p) >= 3 and p[1] == "src":
+            return rel.suffix in {".ts", ".tsx", ".css", ".svg"}
+        if len(p) == 2 and p[1] in {"index.html", "package.json", "tsconfig.json", "vite.config.ts"}:
+            return True
+        if len(p) >= 3 and p[1] == "public":
+            inner = p[2:]
+            if len(inner) == 1:
+                return inner[0] in {"favicon.svg", "manifest.webmanifest", "icon-512.png", "robots.txt", "sw.js"}
+            if len(inner) == 2 and inner[0] == "atlas" and inner[1] == "index.json":
+                return True
+            if len(inner) == 3 and inner[0] == "atlas" and inner[1] == "entries":
+                return re.fullmatch(r"\d+\.json", inner[2]) is not None
+        return False
+    if p[0] == "assets":
+        # Media tree; the public release still ships it (CC BY 4.0), deployments push it to R2.
+        if len(p) == 2:
+            return p[1] == "README.md"
+        if len(p) == 4 and p[1] == "illustrations" and p[2] in {"img", "thumb"}:
+            return rel.suffix == ".webp"
+        if len(p) == 4 and p[1] == "audio" and p[2] in {"uk", "us", "ex", "ex2"}:
+            return rel.suffix == ".mp3"
+        if len(p) == 3 and p[1] in {"brand", "sfx"}:
+            return rel.suffix in {".webp", ".jpg", ".mp3"}
+        return False
     if p[0] == "scripts":
         return (len(p) == 2 and p[1] in SCRIPTS) or (len(p) == 3 and p[1] == "atlas" and p[2] in ATLAS_SCRIPTS)
     if p[0] == "docs":
         return (len(p) == 2 and rel.suffix == ".md") or (len(p) == 3 and p[1] == "assets" and rel.suffix in {".jpg", ".png", ".gif", ".webp", ".mp4"})
     if p[0] == "data":
         return len(p) == 2 and p[1] in {"word-atlas.json", "word-atlas.csv", "README.md"}
-    if name in {".github/workflows/check.yml", ".github/workflows/pages.yml"}:
+    if name in {".github/workflows/check.yml", ".github/workflows/deploy-pages.yml"}:
         return True
-    if p[0] == "public":
-        inner = p[1:]
-        if len(inner) == 1:
-            return inner[0] in {"favicon.svg", "manifest.webmanifest", "icon-512.png", "robots.txt", "sw.js"}
-        if inner[0] == "sfx":
-            return len(inner) == 2 and rel.suffix == ".mp3"
-        if inner[0] == "brand":
-            return len(inner) == 2 and rel.suffix in {".webp", ".jpg"}
-        if inner[0] == "atlas":
-            sub = inner[1:]
-            if sub == ("index.json",):
-                return True
-            if len(sub) == 2 and sub[0] == "entries":
-                return re.fullmatch(r"\d+\.json", sub[1]) is not None
-            if len(sub) == 2 and sub[0] in {"img", "thumb"}:
-                return rel.suffix == ".webp"
-            if len(sub) == 3 and sub[0] == "audio" and sub[1] in {"uk", "us", "ex", "ex2"}:
-                return rel.suffix == ".mp3"
     return False
 
 

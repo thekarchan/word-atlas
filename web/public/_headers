@@ -1,0 +1,26 @@
+# Cloudflare Pages response headers for words.hellokar.org
+# Media is served from assets.hellokar.org (R2); this file only covers the shell.
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+
+# Vite fingerprints everything under /assets/, so it is safe to cache forever.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# The dataset is versioned with the code: revalidate so a deploy is picked up.
+/atlas/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+# The service worker must never be served from a stale cache.
+/sw.js
+  Cache-Control: no-cache
+
+/manifest.webmanifest
+  Content-Type: application/manifest+json
+  Cache-Control: public, max-age=3600
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate

@@ -1,10 +1,13 @@
 """Compile forge output into the public Word Atlas dataset.
 
 Writes:
-  public/atlas/index.json            compact list for search, grid and scheduling
-  public/atlas/entries/<n>.json      full entries in chunks of 100 (learning order)
-  public/atlas/img|thumb/<slug>.webp illustrations (512 / 256 px)
-  public/atlas/audio/<uk|us|ex>/<slug>.mp3
+  web/public/atlas/index.json             compact list for search, grid and scheduling
+  web/public/atlas/entries/<n>.json       full entries in chunks of 100 (learning order)
+  assets/illustrations/img|thumb/<slug>.webp  illustrations (512 / 256 px)
+  assets/audio/<uk|us|ex|ex2>/<slug>.mp3      pronunciation and sentence audio
+
+The JSON ships with the app (Cloudflare Pages); the binaries are published to
+Cloudflare R2 by `npm run assets:sync`.
   data/word-atlas.json|.csv          developer downloads (CC BY 4.0)
 Usage: python3 scripts/atlas/build_atlas.py [--no-media]
 """
@@ -28,7 +31,9 @@ TOPICS = [
 ]
 TOPIC_INDEX = {k: i for i, (k, _) in enumerate(TOPICS)}
 CEFR = ["A1", "A2", "B1", "B2", "C1", "C2"]
-PUB = ROOT / "public" / "atlas"
+# Dataset ships with the app; binaries live in the asset tree published to R2.
+APP = ROOT / "web" / "public" / "atlas"
+MEDIA = ROOT / "assets"
 DATA = ROOT / "data"
 
 
@@ -101,8 +106,9 @@ def main():
     # so neighbouring words come from different topics.
     entries.sort(key=lambda c: (CEFR.index(c["cefr"]), hashlib.sha1(c["id"].encode()).hexdigest()))
 
-    for d in ("img", "thumb", "audio/uk", "audio/us", "audio/ex", "audio/ex2", "entries"):
-        (PUB / d).mkdir(parents=True, exist_ok=True)
+    for d in ("illustrations/img", "illustrations/thumb", "audio/uk", "audio/us", "audio/ex", "audio/ex2"):
+        (MEDIA / d).mkdir(parents=True, exist_ok=True)
+    (APP / "entries").mkdir(parents=True, exist_ok=True)
 
     def media(c):
         hid, slug, m = c["_hid"], c["id"], 0
@@ -110,15 +116,15 @@ def main():
         if src.exists() and src.stat().st_size > 1000:
             try:
                 if not a.no_media:
-                    webp(src, PUB / "img" / f"{slug}.webp", 512, 74)
-                    webp(src, PUB / "thumb" / f"{slug}.webp", 256, 70)
+                    webp(src, MEDIA / "illustrations" / "img" / f"{slug}.webp", 512, 74)
+                    webp(src, MEDIA / "illustrations" / "thumb" / f"{slug}.webp", 256, 70)
                 m |= 1
             except subprocess.CalledProcessError:
                 pass  # still being written; picked up on the next build
         for bit, acc, sub in ((2, "uk", "uk"), (4, "us", "us"), (8, "ex", "ex"), (16, "ex2", "ex2")):
             s = FORGE / "audio" / sub / f"{hid}.mp3"
             if s.exists():
-                dst = PUB / "audio" / acc / f"{slug}.mp3"
+                dst = MEDIA / "audio" / acc / f"{slug}.mp3"
                 if not a.no_media and (not dst.exists() or dst.stat().st_size != s.stat().st_size):
                     shutil.copyfile(s, dst)
                 m |= bit
@@ -136,7 +142,7 @@ def main():
 
     for n in range(0, len(entries), 100):
         chunk = [{k: v for k, v in c.items() if not k.startswith("_")} for c in entries[n : n + 100]]
-        (PUB / "entries" / f"{n // 100}.json").write_text(json.dumps(chunk, ensure_ascii=False, separators=(",", ":")))
+        (APP / "entries" / f"{n // 100}.json").write_text(json.dumps(chunk, ensure_ascii=False, separators=(",", ":")))
 
     meta = {
         "id": "word-atlas-open",
@@ -153,7 +159,7 @@ def main():
         "fields": ["id", "word", "zh", "ipa", "cefr", "topic", "media"],
         "words": index,
     }
-    (PUB / "index.json").write_text(json.dumps(meta, ensure_ascii=False, separators=(",", ":")))
+    (APP / "index.json").write_text(json.dumps(meta, ensure_ascii=False, separators=(",", ":")))
 
     DATA.mkdir(exist_ok=True)
     public = [{k: v for k, v in c.items() if not k.startswith("_") and k != "m"} for c in entries]

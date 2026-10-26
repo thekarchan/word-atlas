@@ -1,4 +1,4 @@
-"""Master the chosen sound kit into public/sfx/: trim, fade, loudness-match, seamless loops.
+"""Master the chosen sound kit into assets/sfx/: trim, fade, loudness-match, seamless loops.
 
 Usage: python3 scripts/atlas/build_sfx.py
 """
@@ -37,7 +37,7 @@ GALAXY = {
     "voice-galaxy-lit": ("galaxy/galaxy-lit-0", -17),
 }
 MUSIC = {"amb-stars": "galaxy/music-galaxy-0"}
-OUT = ROOT / "public" / "sfx"
+OUT = ROOT / "assets" / "sfx"
 
 
 def run(*args):

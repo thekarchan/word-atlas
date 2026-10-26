@@ -22,7 +22,7 @@ const exe = process.env.CHROME_PATH;
 const browser = await chromium.launch(exe ? { executablePath: exe } : {});
 const ctx = await browser.newContext({ viewport: size, deviceScaleFactor: mobile ? 2 : 1, colorScheme: "light", hasTouch: mobile });
 // Demo profile: a learner a few weeks in, so the galaxy has lit stars.
-const index = JSON.parse(fs.readFileSync(path.join(root, "public/atlas/index.json"), "utf8"));
+const index = JSON.parse(fs.readFileSync(path.join(root, "web/public/atlas/index.json"), "utf8"));
 const seeded = index.words.filter((w, i) => w[4] <= 2 && i % 3 === 0).slice(0, 640).map((w) => w[0]);
 await ctx.addInitScript((ids) => {
   if (!sessionStorage.getItem("demo")) {
