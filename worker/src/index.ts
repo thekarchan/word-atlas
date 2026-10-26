@@ -33,6 +33,15 @@ const ONE_YEAR = "public, max-age=31536000, immutable";
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
+    // Phase timings, surfaced as Server-Timing so a slow response can be
+    // attributed to the counter, the bucket, or the network in front of us.
+    const marks: Record<string, number> = {};
+    let last = Date.now();
+    const lap = (name: string) => {
+      const now = Date.now();
+      marks[name] = now - last;
+      last = now;
+    };
 
     // Nothing but reads. No PUT/POST/DELETE, and no OPTIONS preflight — the app
     // only ever makes simple GETs, so a preflight means someone else is probing.
@@ -57,8 +66,11 @@ export default {
     // if it were the whole object.
     if (!ranged) {
       const hit = await cache.match(cacheKey);
+      lap("cache");
       if (hit) {
-        return request.method === "HEAD" ? new Response(null, { headers: hit.headers }) : hit;
+        const headers = new Headers(hit.headers);
+        headers.set("server-timing", timing(marks));
+        return request.method === "HEAD" ? new Response(null, { headers }) : new Response(hit.body, { headers });
       }
     }
 
@@ -66,13 +78,17 @@ export default {
       charge: () => chargeOne(env),
       failClosed: (env.FAIL_CLOSED ?? "true").toLowerCase() !== "false",
     });
+    lap("quota");
     if (!gate.ok) return gate.response;
 
     try {
       if (request.method === "HEAD") {
         const head = await env.ASSETS.head(key);
+        lap("r2");
         if (!head) return notFound(env);
-        return new Response(null, { headers: assetHeaders(head, key, origin) });
+        const headers = assetHeaders(head, key, origin);
+        headers.set("server-timing", timing(marks));
+        return new Response(null, { headers });
       }
 
       if (ranged) {
@@ -86,18 +102,22 @@ export default {
           });
         }
         const part = await env.ASSETS.get(key, { range: { offset: range.start, length: range.length } });
+        lap("r2");
         if (!part) return notFound(env);
         const headers = assetHeaders(head, key, origin);
         headers.set("content-range", `bytes ${range.start}-${range.end}/${head.size}`);
         headers.set("content-length", String(range.length));
         headers.set("cache-control", "public, max-age=3600");
+        headers.set("server-timing", timing(marks));
         return new Response(part.body, { status: 206, headers });
       }
 
       const object = await env.ASSETS.get(key);
+      lap("r2");
       if (!object) return notFound(env);
 
       const headers = assetHeaders(object, key, origin);
+      headers.set("server-timing", timing(marks));
       const response = new Response(object.body, { status: 200, headers });
       ctx.waitUntil(cache.put(cacheKey, response.clone()).catch(() => undefined));
       return response;
@@ -111,6 +131,13 @@ export default {
     }
   },
 } satisfies ExportedHandler<Env>;
+
+/** `cache;dur=3, quota;dur=41, r2;dur=88` */
+function timing(marks: Record<string, number>): string {
+  return Object.entries(marks)
+    .map(([name, ms]) => `${name};dur=${ms}`)
+    .join(", ");
+}
 
 function assetHeaders(object: R2Object, key: string, origin: string): Headers {
   const headers = new Headers();
