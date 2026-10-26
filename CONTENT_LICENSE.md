@@ -10,9 +10,9 @@ Source code and UI design are under the [MIT License](LICENSE). Dependencies kee
 
 以下内容以 **[Creative Commons Attribution 4.0 International (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/)** 提供，在项目维护者能够授予的权利范围内：
 
-- `data/` 下的词库文件，以及 `public/atlas/index.json`、`public/atlas/entries/` 中的释义、英文释义、例句、译文、搭配、词族、近反义词、提示、分级与分类；
-- `public/atlas/img/`、`public/atlas/thumb/`、`public/brand/` 中的插画；
-- `public/atlas/audio/` 中的发音与例句录音。
+- `data/` 下的词库文件，以及 `web/public/atlas/index.json`、`web/public/atlas/entries/` 中的释义、英文释义、例句、译文、搭配、词族、近反义词、提示、分级与分类；
+- `assets/illustrations/img/`、`assets/illustrations/thumb/`、`assets/brand/` 中的插画（公开发布于 `assets.hellokar.org`）；
+- `assets/audio/` 中的发音与例句录音。
 
 The material above is offered under CC BY 4.0, to the extent of the rights the maintainers can grant.
 

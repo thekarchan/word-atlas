@@ -7,7 +7,7 @@
 3. **插画** `gen_images.py`：每个词条自带一个场景描述 `scene`，与统一画风提示词组合后生成 1024px 图片，压缩为 768px WebP 母版。按学习路线顺序生成。
 4. **发音** `gen_word_audio.py`：ElevenLabs，英音 Alice、美音 Sarah。
 5. **例句朗读** `gen_sentence_audio.py`：为 `ex[0]` 合成朗读，按学习路线顺序。
-6. **编译** `build_atlas.py`：清洗字段、排序、切块，生成 `public/atlas/` 与 `data/`。
+6. **编译** `build_atlas.py`：清洗字段、排序、切块，生成 `web/public/atlas/`（词库 JSON）与 `assets/`（插画、音频）以及 `data/`。
 7. **校验** `npm run check:atlas`：结构、顺序、引用与媒体文件存在性。
 
 ```bash

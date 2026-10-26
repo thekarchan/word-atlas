@@ -55,8 +55,8 @@ Every definition, sentence, illustration and recording was made new for this pro
 ## The dataset (CC BY 4.0)
 
 - [`data/word-atlas.json`](data/word-atlas.json) and [`data/word-atlas.csv`](data/word-atlas.csv)
-- `public/atlas/img/` (512 px WebP) and `public/atlas/thumb/` (256 px)
-- `public/atlas/audio/{uk,us,ex}/` MP3
+- `assets.hellokar.org/illustrations/img/` (512 px WebP) and `.../thumb/` (256 px)
+- `assets.hellokar.org/audio/{uk,us,ex,ex2}/` MP3
 
 Field reference: [docs/dataset.md](docs/dataset.md). Use it for Anki decks, apps, browser extensions, evaluation sets or research. Please credit "Word Atlas contributors".
 

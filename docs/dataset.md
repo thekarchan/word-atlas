@@ -23,7 +23,7 @@
 
 同样内容的表格版，多值字段用 ` | `、` ; ` 或 `, ` 连接，UTF-8 编码。
 
-## 网页数据 `public/atlas/`
+## 网页数据 `web/public/atlas/`
 
 - `index.json`：紧凑索引，`words` 中每行为 `[id, word, zh, ipa, cefrIndex, topicIndex, media]`。`media` 是位标记：`1` 插画、`2` 英音、`4` 美音、`8` 例句朗读。
 - `entries/<n>.json`：完整词条，每块 100 条，第 `n` 块对应索引中第 `n*100` 到 `n*100+99` 行。

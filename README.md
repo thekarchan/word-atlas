@@ -9,7 +9,7 @@
 7,298 个雅思核心词，每个词一幅原创插画、两条原创例句、英美发音和一套刚刚好的复习节奏。<br>
 免费，开源，无需注册，打开网页就能背。
 
-[**打开词光 →**](https://0xlei.tech/words/) &nbsp;·&nbsp; [▶ 看宣传片](docs/assets/launch.mp4) &nbsp;·&nbsp; [下载词库](data/) &nbsp;·&nbsp; [English](README.en.md)
+[**打开词光 →**](https://words.hellokar.org/) &nbsp;·&nbsp; [▶ 看宣传片](docs/assets/launch.mp4) &nbsp;·&nbsp; [下载词库](data/) &nbsp;·&nbsp; [English](README.en.md)
 
 ![MIT](https://img.shields.io/badge/code-MIT-1E2640) ![CC BY 4.0](https://img.shields.io/badge/content-CC%20BY%204.0-C4573A) ![words](https://img.shields.io/badge/words-7%2C298-7F9B77) ![FSRS](https://img.shields.io/badge/scheduler-FSRS%206-D9A03A) ![no login](https://img.shields.io/badge/login-not%20required-6F93AE) ![GitHub stars](https://img.shields.io/github/stars/designfuchen/word-atlas?style=flat&color=E8B65A)
 
@@ -50,8 +50,8 @@
 画面讲的就是例句里的那件事，同一种复古图鉴画风贯穿全部 7,298 个词。
 
 <table>
-<tr><td align="center" width="25%"><img src="public/atlas/img/abandon.webp" alt="abandon" width="100%"><br><b>abandon</b> 遗弃；抛弃<br><sub><i>We had to abandon our car in the snow.</i></sub></td><td align="center" width="25%"><img src="public/atlas/img/volcano.webp" alt="volcano" width="100%"><br><b>volcano</b> 火山<br><sub><i>We watched steam rising from the volcano across the lake.</i></sub></td><td align="center" width="25%"><img src="public/atlas/img/orchestra.webp" alt="orchestra" width="100%"><br><b>orchestra</b> 管弦乐队<br><sub><i>The orchestra began playing as the lights dimmed.</i></sub></td><td align="center" width="25%"><img src="public/atlas/img/telescope.webp" alt="telescope" width="100%"><br><b>telescope</b> 望远镜<br><sub><i>We watched the moon through a telescope on the balcony.</i></sub></td></tr>
-<tr><td align="center" width="25%"><img src="public/atlas/img/migrate.webp" alt="migrate" width="100%"><br><b>migrate</b> 迁徙；移居<br><sub><i>These birds migrate south when the weather turns cold.</i></sub></td><td align="center" width="25%"><img src="public/atlas/img/festival.webp" alt="festival" width="100%"><br><b>festival</b> 节日；庆祝活动<br><sub><i>Our town holds a lantern festival every autumn.</i></sub></td><td align="center" width="25%"><img src="public/atlas/img/lighthouse.webp" alt="lighthouse" width="100%"><br><b>lighthouse</b> 灯塔<br><sub><i>The lighthouse beam swept across the dark sea.</i></sub></td><td align="center" width="25%"><img src="public/atlas/img/astronaut.webp" alt="astronaut" width="100%"><br><b>astronaut</b> 宇航员；航天员<br><sub><i>The astronaut floated gently through the small space station.</i></sub></td></tr>
+<tr><td align="center" width="25%"><img src="https://assets.hellokar.org/illustrations/img/abandon.webp" alt="abandon" width="100%"><br><b>abandon</b> 遗弃；抛弃<br><sub><i>We had to abandon our car in the snow.</i></sub></td><td align="center" width="25%"><img src="https://assets.hellokar.org/illustrations/img/volcano.webp" alt="volcano" width="100%"><br><b>volcano</b> 火山<br><sub><i>We watched steam rising from the volcano across the lake.</i></sub></td><td align="center" width="25%"><img src="https://assets.hellokar.org/illustrations/img/orchestra.webp" alt="orchestra" width="100%"><br><b>orchestra</b> 管弦乐队<br><sub><i>The orchestra began playing as the lights dimmed.</i></sub></td><td align="center" width="25%"><img src="https://assets.hellokar.org/illustrations/img/telescope.webp" alt="telescope" width="100%"><br><b>telescope</b> 望远镜<br><sub><i>We watched the moon through a telescope on the balcony.</i></sub></td></tr>
+<tr><td align="center" width="25%"><img src="https://assets.hellokar.org/illustrations/img/migrate.webp" alt="migrate" width="100%"><br><b>migrate</b> 迁徙；移居<br><sub><i>These birds migrate south when the weather turns cold.</i></sub></td><td align="center" width="25%"><img src="https://assets.hellokar.org/illustrations/img/festival.webp" alt="festival" width="100%"><br><b>festival</b> 节日；庆祝活动<br><sub><i>Our town holds a lantern festival every autumn.</i></sub></td><td align="center" width="25%"><img src="https://assets.hellokar.org/illustrations/img/lighthouse.webp" alt="lighthouse" width="100%"><br><b>lighthouse</b> 灯塔<br><sub><i>The lighthouse beam swept across the dark sea.</i></sub></td><td align="center" width="25%"><img src="https://assets.hellokar.org/illustrations/img/astronaut.webp" alt="astronaut" width="100%"><br><b>astronaut</b> 宇航员；航天员<br><sub><i>The astronaut floated gently through the small space station.</i></sub></td></tr>
 </table>
 
 ### 🔊 每个词都会读
@@ -60,9 +60,9 @@
 
 | | |
 |---|---|
-| 🇬🇧 英音 | [abandon /əˈbændən/](https://0xlei.tech/words/atlas/audio/uk/abandon.mp3) |
-| 🇺🇸 美音 | [abandon /əˈbændən/](https://0xlei.tech/words/atlas/audio/us/abandon.mp3) |
-| 📖 例句朗读 | [We had to abandon our car in the snow.](https://0xlei.tech/words/atlas/audio/ex/abandon.mp3) |
+| 🇬🇧 英音 | [abandon /əˈbændən/](https://assets.hellokar.org/audio/uk/abandon.mp3) |
+| 🇺🇸 美音 | [abandon /əˈbændən/](https://assets.hellokar.org/audio/us/abandon.mp3) |
+| 📖 例句朗读 | [We had to abandon our car in the snow.](https://assets.hellokar.org/audio/ex/abandon.mp3) |
 
 全部 7,298 个词都有英音、美音和例句朗读，还有 1,011 个重点词的第二条例句也配了朗读。
 
@@ -70,13 +70,13 @@
 
 | | |
 |---|---|
-| 🎙 **开屏配音** | [「欢迎打开雅思大门」](https://0xlei.tech/words/sfx/splash-voice.mp3)：星尘汇聚成“词光”，大门打开 |
-| 🌌 **星图配音** | [「这是你的词汇星图。每学会一个词，就点亮一颗星。」](https://0xlei.tech/words/sfx/voice-galaxy-hello.mp3) |
-| 🎵 **星空音乐** | [一段可无缝循环的原创配乐](https://0xlei.tech/words/sfx/amb-stars.mp3)，默认陪你背词 |
-| 🌧 **6 段环境声** | [雨天图书馆](https://0xlei.tech/words/sfx/amb-rain.mp3) · [清晨海岸](https://0xlei.tech/words/sfx/amb-sea.mp3) · [林间早晨](https://0xlei.tech/words/sfx/amb-forest.mp3) · [夜晚壁炉](https://0xlei.tech/words/sfx/amb-fire.mp3) · [远航船舱](https://0xlei.tech/words/sfx/amb-voyage.mp3) · [安静咖啡馆](https://0xlei.tech/words/sfx/amb-cafe.mp3) |
+| 🎙 **开屏配音** | [「欢迎打开雅思大门」](https://assets.hellokar.org/sfx/splash-voice.mp3)：星尘汇聚成“词光”，大门打开 |
+| 🌌 **星图配音** | [「这是你的词汇星图。每学会一个词，就点亮一颗星。」](https://assets.hellokar.org/sfx/voice-galaxy-hello.mp3) |
+| 🎵 **星空音乐** | [一段可无缝循环的原创配乐](https://assets.hellokar.org/sfx/amb-stars.mp3)，默认陪你背词 |
+| 🌧 **6 段环境声** | [雨天图书馆](https://assets.hellokar.org/sfx/amb-rain.mp3) · [清晨海岸](https://assets.hellokar.org/sfx/amb-sea.mp3) · [林间早晨](https://assets.hellokar.org/sfx/amb-forest.mp3) · [夜晚壁炉](https://assets.hellokar.org/sfx/amb-fire.mp3) · [远航船舱](https://assets.hellokar.org/sfx/amb-voyage.mp3) · [安静咖啡馆](https://assets.hellokar.org/sfx/amb-cafe.mp3) |
 | ✨ **界面音效** | 答对、答错、翻卡、打字、连胜、点亮星星……每个操作都有自己的声音；读单词时背景音会自动压低 |
 
-全部素材都在仓库里：插画在 `public/atlas/img/`，录音在 `public/atlas/audio/`，这两类按 CC BY 4.0 开放；界面声音和配乐在 `public/sfx/`，随应用一起提供。
+全部素材按 CC BY 4.0 开放，直接从这里取：插画 `https://assets.hellokar.org/illustrations/img/`，录音 `https://assets.hellokar.org/audio/`，界面声音和配乐 `https://assets.hellokar.org/sfx/`。代码仓库只放应用和词库，媒体在 Cloudflare R2 上单独托管，见 [docs/deployment.md](docs/deployment.md)。
 
 ## 每个词都有什么
 
@@ -127,8 +127,8 @@
 |---|---|
 | [`data/word-atlas.json`](data/word-atlas.json) | 完整结构化数据 |
 | [`data/word-atlas.csv`](data/word-atlas.csv) | 表格版，可直接导入 Excel / Anki |
-| `public/atlas/img/` | 7,298 幅 512 px WebP 插画（另有 256 px 缩略图） |
-| `public/atlas/audio/` | `uk/` `us/` 单词发音，`ex/` `ex2/` 例句朗读，MP3 |
+| `assets.hellokar.org/illustrations/` | 7,298 幅 512 px WebP 插画（`thumb/` 另有 256 px 缩略图） |
+| `assets.hellokar.org/audio/` | `uk/` `us/` 单词发音，`ex/` `ex2/` 例句朗读，MP3 |
 
 ```json
 {
@@ -159,26 +159,53 @@ b2_env = [w for w in words if w["cefr"] == "B2" and w["topic"] == "environment"]
 
 可以拿它做 Anki 牌组、背词小程序、浏览器插件、AI 应用的评测集，或者你自己的研究。字段说明见 [docs/dataset.md](docs/dataset.md)。
 
+## 仓库结构
+
+代码和数据在 Cloudflare Pages，二进制媒体在 Cloudflare R2，两条线互不干扰。
+
+```
+Cloudflare Pages · words.hellokar.org          Cloudflare R2 · assets.hellokar.org
+├── 网站界面（index.html / sw.js / _headers）   ├── 单词插画  illustrations/{img,thumb}
+├── React 应用（dist/assets/*.js|css|woff2）    ├── 音频文件  audio/{uk,us,ex,ex2}
+└── 学习功能（FSRS、星图、打字、分享）           └── 其他静态资源  brand/  sfx/
+    词库 JSON：web/public/atlas/
+```
+
+| 目录 | 内容 | 去哪 |
+|---|---|---|
+| `web/` | React 应用、界面、学习功能、词库 JSON | Pages，87 个文件 / 7.9 MB |
+| `assets/` | 插画、音频、品牌图、音效（不进 Git） | R2，37,631 个文件 / 630 MB |
+| `data/` | 词库源数据（JSON / CSV） | 随仓库发布 |
+| `scripts/` | 生成、校验、上传 | — |
+
+这样拆是因为 Cloudflare Pages 单次部署上限 20,000 个文件，而媒体有 37,631 个。
+地址全部由 [`web/src/lib/assets.ts`](web/src/lib/assets.ts) 统一拼装，换域名只改一个环境变量。
+完整流程见 [docs/deployment.md](docs/deployment.md)。
+
 ## 本地运行
 
 需要 Node.js 20+。
 
 ```bash
-git clone https://github.com/designfuchen/word-atlas.git
+git clone https://github.com/thekarchan/word-atlas.git
 cd word-atlas
 npm ci
 npm run dev
 ```
 
 打开 `http://localhost:5188`。同一 Wi-Fi 下的手机可以访问终端里显示的 Network 地址。
+媒体默认从线上 R2 读取；想完全离线，先 `npm run assets:pull`，再在 `.env.local` 里设
+`VITE_ASSET_BASE=/assets`。
 
 ```bash
-npm test            # 单元测试
-npm run check:atlas # 校验词库结构与媒体文件
-npm run build       # 生产构建，输出到 dist/
+npm test             # 单元测试
+npm run check:atlas  # 校验词库结构（有 assets/ 时一并校验媒体文件）
+npm run build        # 生产构建，输出到 dist/
+npm run assets:sync  # 把 assets/ 增量上传到 R2
 ```
 
-部署就是把 `dist/` 放到任意静态托管。子路径部署用 `ATLAS_BASE=/words/ npm run build`，见 [docs/deployment.md](docs/deployment.md)。
+部署见 [docs/deployment.md](docs/deployment.md)：Pages 用 `wrangler pages deploy dist`，
+推送到 `main` 时由 GitHub Actions 自动完成。
 
 ## 内容是怎么做出来的
 

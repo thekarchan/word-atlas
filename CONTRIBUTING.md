@@ -6,7 +6,7 @@
 
 最有价值的贡献是纠错。请在 Issue 中写明词条 `id`、问题和建议的改法，或直接提交 PR：
 
-1. 修改 `.local` 之外的源数据前，请先看 [docs/pipeline.md](docs/pipeline.md)。小修正可以直接改 `data/word-atlas.json` 与 `public/atlas/entries/` 中对应的条目，保持两处一致。
+1. 修改 `.local` 之外的源数据前，请先看 [docs/pipeline.md](docs/pipeline.md)。小修正可以直接改 `data/word-atlas.json` 与 `web/public/atlas/entries/` 中对应的条目，保持两处一致。
 2. 运行 `npm run check:atlas` 和 `npm test`。
 3. 在 PR 里说明修改理由，必要时附权威词典链接。
 
