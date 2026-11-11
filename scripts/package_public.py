@@ -24,7 +24,7 @@ TOP = {
     ".gitignore", "package.json", "package-lock.json", "tsconfig.json", "vite.config.ts",
     "wrangler.jsonc", "PUBLIC_MANIFEST.json",
 }
-SCRIPTS = {"check-atlas.mjs", "render-cards.mjs", "record-demo.mjs", "package_public.py"}
+SCRIPTS = {"build-search-pages.mjs", "check-atlas.mjs", "render-cards.mjs", "record-demo.mjs", "package_public.py"}
 ATLAS_SCRIPTS = {"common.py", "gen_text.py", "gen_images.py", "gen_brand.py", "gen_word_audio.py", "gen_sentence_audio.py", "gen_sfx.py", "gen_galaxy_audio.sh", "fix_blocked.py", "build_atlas.py", "build_sfx.py"}
 TEXT = {".ts", ".tsx", ".css", ".svg", ".md", ".json", ".mjs", ".js", ".py", ".html", ".csv", ".yml", ".webmanifest", ""}
 PATTERNS = {
@@ -53,7 +53,7 @@ def allowed(rel: Path) -> bool:
         if len(p) >= 3 and p[1] == "public":
             inner = p[2:]
             if len(inner) == 1:
-                return inner[0] in {"favicon.svg", "manifest.webmanifest", "icon-512.png", "robots.txt", "sw.js"}
+                return inner[0] in {"dictionary.css", "favicon.svg", "manifest.webmanifest", "icon-512.png", "robots.txt", "sw.js"}
             if len(inner) == 2 and inner[0] == "atlas" and inner[1] == "index.json":
                 return True
             if len(inner) == 3 and inner[0] == "atlas" and inner[1] == "entries":

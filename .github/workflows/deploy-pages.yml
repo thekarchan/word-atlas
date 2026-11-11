@@ -32,7 +32,7 @@ jobs:
           VITE_ASSET_BASE: ${{ vars.ASSET_BASE || 'https://assets.hellokar.org' }}
 
       - name: Deploy
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

@@ -170,6 +170,8 @@ function Shell({ privateAvailable }: { privateAvailable: boolean }) {
               GitHub
             </a>{" "}
             · <a href="#/about">关于</a>
+            {" · "}
+            <a href={`${import.meta.env.BASE_URL}dictionary/`}>雅思词典</a>
           </p>
         </footer>
       )}

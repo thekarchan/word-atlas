@@ -5,7 +5,7 @@
   "description": "A beautiful, open IELTS vocabulary atlas: 7,000+ illustrated words with UK/US audio, original examples and FSRS spaced repetition.",
   "scripts": {
     "dev": "vite --host 0.0.0.0",
-    "build": "tsc -b && vite build",
+    "build": "tsc -b && vite build && node scripts/build-search-pages.mjs",
     "preview": "vite preview --host 0.0.0.0",
     "test": "node --import tsx --test \"web/src/**/*.test.ts\" \"worker/src/**/*.test.ts\"",
     "check:atlas": "node scripts/check-atlas.mjs",

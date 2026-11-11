@@ -6,9 +6,11 @@
     <meta name="theme-color" content="#0D1120" />
     <meta name="twitter:title" content="词光 · 一词一画，点亮雅思" />
     <meta name="twitter:image" content="https://assets.hellokar.org/brand/og-card.jpg" />
-    <title>词光 Word Atlas · 一词一画，点亮雅思</title>
+    <title>词光 Word Atlas · 免费雅思单词图鉴</title>
     <meta name="description" content="7,298 个雅思核心词，每个词一幅原创插画、两句原创例句和英美发音。学会一个，就点亮一颗星。免费、开源、无需注册。" />
+    <link rel="canonical" href="https://words.hellokar.org/" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="词光" />
     <meta property="og:url" content="https://words.hellokar.org/" />
     <meta property="og:title" content="词光 · 一词一画，点亮雅思" />
     <meta property="og:description" content="7,298 个雅思词，每个都有一幅画。学会一个，就点亮一颗星。免费、开源、无需注册。" />
@@ -17,6 +19,15 @@
     <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
     <link rel="apple-touch-icon" href="%BASE_URL%icon-512.png" />
     <link rel="manifest" href="%BASE_URL%manifest.webmanifest" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "词光",
+        "alternateName": "Word Atlas",
+        "url": "https://words.hellokar.org/"
+      }
+    </script>
     <!-- Illustrations and audio live on Cloudflare R2, a second origin: warm it up early. -->
     <link rel="preconnect" href="https://assets.hellokar.org" crossorigin />
     <link rel="dns-prefetch" href="https://assets.hellokar.org" />
@@ -34,7 +45,13 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <main class="page">
+        <h1 class="display">词光 Word Atlas · 雅思单词图鉴</h1>
+        <p class="lede">用插画、双语例句和英美发音学习雅思词汇，再用间隔复习巩固记忆。免费使用，无需注册。</p>
+        <p><a class="link" href="%BASE_URL%dictionary/">按字母浏览雅思词典</a></p>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
